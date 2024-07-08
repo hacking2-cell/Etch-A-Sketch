@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+#sketch-box {
+    display: inline-block;
+    margin-top: 20vh;
+}
+ #container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 600px;
+    height: 600px;
+    border: 10px solid #191919;
+    box-sizing: border-box;
+ }
+ .row {
+    display: flex;
+    width: 100%;
+}
+.column {
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    flex: 1 1 10px;
+}
+
+#container:hover {
+    cursor: pointer;
+}
+#buttons {
+    display:flex;
+    justify-content: space-around;
+    
+}
+
+#buttons > button {
+    padding: 10px 40px;
+    margin-bottom: 5px;
+}
