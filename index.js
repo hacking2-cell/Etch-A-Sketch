@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
       box.painted = false;
       box.style.backgroundColor = "";
       paint(colorPicker.value);
-      paint(randomColor)
+      paint(randomColor);
     });
   }
    clearBtn.addEventListener("click", clear);
