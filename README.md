@@ -1,3 +1,4 @@
+  # Etch-A-Sketch.
 This is a simple Etch-A-Skecth project from the TOP curriculum. It has a pretty friendly interface and a simple style.
 We begin with a 16 x 16 grid as default and 6 buttons on the right.
  ## BUTTONS:
