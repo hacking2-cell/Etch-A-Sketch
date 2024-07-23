@@ -1,11 +1,9 @@
 # Etch-A-Sketch.
-write a function to have a 10% darkening color, it should be able to sum up until it reaches 100%
-
-
-function eventTrigger("mousedown", mouseover())
-
-
-
-
-
+changes
+-add
+new buttons/functions:erase, clear.
+new website layout for better space management due to the new buttons.
+new background color.
+new animations for the buttons.
+a condition to check if the mouse is pressed to interact with the sketchpad
 

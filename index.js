@@ -2,11 +2,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const containerDiv = document.getElementById("container");
   const squareNumberBtn = document.getElementById("square-number");
   const colorPicker = document.getElementById("color-picker");
-  const randomColorBtn = document.getElementById('random-color');
+  const randomColorBtn = document.getElementById("random-color");
+  const rainbowBtn = document.getElementById("rainbow-btn");
+  const eraserBtn = document.getElementById("eraser-btn");
   const clearBtn = document.getElementById("clear-btn");
+  let mouseDown = false;
+  document.addEventListener("mousedown", () => {mouseDown = true});
+  document.addEventListener("mouseup", () => {mouseDown = false});
+
   let currentColor = colorPicker.value;
+  let mode = "normal";
 
   function createGrid(number) {
+    //clears the existing grid to then reate a new one
     while (containerDiv.firstChild) {
       containerDiv.removeChild(containerDiv.firstChild);
     }
@@ -19,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
       number == "" ||
       String(number).match(/[^0-9]/)
     ) {
-      sqr = 10;
+      sqr = 16;
     } else {
       sqr = number;
       } 
@@ -33,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
           row.appendChild(column);
         }
     }
-    attachPaintListeners();
+    attachPaintListeners();;
     updateSqrNumBtn(sqr);
   }
   
@@ -43,14 +51,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function attachPaintListeners() {
     const column = document.querySelectorAll(".column");
+
     column.forEach((box) => {
-      const paintBox = function () {
-        if (!box.painted) {
-          box.style.backgroundColor = currentColor;
-          box.painted = true;
-        }
-      };
-      box.addEventListener("mouseover", paintBox);
+        const paintBox = function () {
+          if (!box.painted) {
+            box.style.backgroundColor = currentColor;
+            box.painted = true;
+          }
+        };
+      
+          box.addEventListener("mouseover", () => {
+            if (!mouseDown) return;
+            
+            switch (mode) {
+              case "normal":
+              case "random":
+                paintBox()
+                break;
+              case "rainbow":
+                currentColor = getRandomColor(); // updates currentColor for each box before painting
+                rainbowBtn.style.backgroundColor = currentColor;
+                paintBox()
+                break;
+              case "eraser":
+                if (box.painted) {
+                  box.style.backgroundColor = "";
+                  box.painted = false;
+                }
+                break;
+            }
+          });
+
     });
   }
 
@@ -62,26 +93,41 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  eraserBtn.addEventListener("click", () => {
+    mode = "eraser"
+  })
+
   squareNumberBtn.addEventListener("click", () => {
     let gridSquare = prompt("enter a number between 2 and 100");
     createGrid(gridSquare);
   });
 
   colorPicker.addEventListener("input", () => {
+    mode = "normal";
     currentColor = colorPicker.value;
   });
 
-  randomColorBtn.addEventListener('click',() => {
+  function getRandomColor() {
     let maxVal = 0xFFFFFF;
     let randomNum = Math.floor(Math.random() * maxVal).toString(16);
     let padColor = randomNum.padStart(6, '0');
-    currentColor = `#${padColor.toUpperCase()}`;
+      return `#${padColor.toUpperCase()}`;
+  }
+
+  randomColorBtn.addEventListener("click", () => {
+    mode = "random";
+    currentColor = getRandomColor();
     randomColorBtn.style.backgroundColor = currentColor;
+  });
+
+  rainbowBtn.addEventListener("click", () => {
+    mode = "rainbow";
+    currentColor = getRandomColor();
   });
 
   clearBtn.addEventListener("click", clear);
    
 
-  console.log(createGrid(10));
+ createGrid(16);
 });
   
